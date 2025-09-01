@@ -48,8 +48,7 @@ To run this financial planning agent, follow these steps:
 5.  **Execute the Script**:
     Run the main Python script:
     ```bash
-    python your_main_script_name.py
+    python app.py
     ```
-    (Replace `your_main_script_name.py` with the actual name of your Python file containing the Langgraph workflow.)
 
 The script will execute the financial planning workflow, and the `final_state` variable will hold all the calculated and processed information about the client's financial situation and goal planning. You can then inspect `final_state` to view the outputs of each step.
