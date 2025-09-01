@@ -21,8 +21,8 @@ To run this financial planning agent, follow these steps:
 
 1.  **Clone the Repository**:
     ```bash
-    git clone <repository_url>
-    cd <repository_name>
+    git clone https://github.com/aakash-haldankar-quantal/langgraph_armstrong.git
+    cd https://github.com/aakash-haldankar-quantal/langgraph_armstrong.git
     ```
 
 2.  **Set up Environment Variables**:
