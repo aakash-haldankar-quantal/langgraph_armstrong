@@ -113,7 +113,7 @@ client_data= {
       { 
         #"investment_mode": "SIP",
         #"start_date": "2020-01-01",
-        "current_value": None,
+        "current_value": 0,
         "expected_annual_return": 0.12,  # autocalulated
         #"maturity_date": "2040-01-01",   
         "sip_amount": 15000 
@@ -125,7 +125,7 @@ client_data= {
         "current_value": 800000,
         "expected_annual_return": 0.11,  # autocalculated
         #"maturity_date": "2030-06-01",
-        "sip_amount": None,
+        "sip_amount": 0,
         #"sip_frequency": None  
       }
     ], 
@@ -273,12 +273,12 @@ client_data= {
     {
       "name_of_kid": "Aarav Mehta",
       "graduation_stream": "Engineering",
-      "graduation_destination": "US", #enum(International/Domestic)
-      "current_fees_of_graduation": 5000000, # auto calculated
-      "fund_allocated_for_graduation": None,  
+      "graduation_destination": "Domestic", #enum(International/Domestic)
+      "current_fees_of_graduation": 0, # auto calculated
+      "fund_allocated_for_graduation": 0,  
       "post_graduation_stream": "MBA",  
-      "post_graduation_destination": "UK",   #enum(International/Domestic)
-      "current_fees_of_post_graduation": 3000000, # auto calculated
+      "post_graduation_destination": "International",   #enum(International/Domestic)
+      "current_fees_of_post_graduation": 80000, # auto calculated
       "fund_allocated_for_post_graduation": 500000 ,
       "scheme_for_education": [{
       "scheme_name": "Aarav Engineering HDFC Child Gift Fund",
@@ -287,15 +287,15 @@ client_data= {
       "monthly_investment": 10000,
       "interest_rate": 0.12
       }]},
-      {
+      {                                                                                                                                                                             
       "name_of_kid": "Raghav Mehta",
       "graduation_stream": "Engineering",
       "graduation_destination": "UK",  #enum(International/domestic)
-      "current_fees_of_graduation": 4000000,  # auto calculated
+      "current_fees_of_graduation": 0,  # auto calculated
       "fund_allocated_for_graduation": 1000000,
       "post_graduation_stream": "MBA",
       "post_graduation_destination": "UK",         #enum(international/domestic)
-      "current_fees_of_post_graduation": 2000000,   # auto calculated 
+      "current_fees_of_post_graduation": 90000,   # auto calculated 
       "fund_allocated_for_post_graduation": 400000 ,
       "scheme_for_education": [{
       "scheme_name": "Raghav Engineering HDFC Child Gift Fund",
@@ -321,7 +321,6 @@ client_data= {
     }
   ]
 }
-
 
 from datetime import datetime
 from datetime import date
@@ -385,7 +384,7 @@ def goals_future_value(client_data):
         goal_gap=goal['capital_required_at_target_year']-goal['future_value_of_saved_amount']
         if goal_gap>0:
             if surplus>0: 
-                print(f"considering the surplus collected from previous goals: {surplus}, the new gap is: {goal_gap}")
+                #print(f"considering the surplus collected from previous goals: {surplus}, the new gap is: {goal_gap}")
                 goal_gap=goal_gap-surplus 
                 goal['goal_gap']=goal_gap
                 goal['funded_from'].append({'surplus_left_from_previous_goal': surplus})
@@ -409,11 +408,11 @@ def goals_future_value(client_data):
 
     return client_data
 
-client_data1=calculate_age(client_data)
-client_data2=goals_future_value(client_data1)
-client_data2['financial_goals']
+# client_data1=calculate_age(client_data)
+# client_data2=goals_future_value(client_data1)
+# client_data2['financial_goals']
     
-client_data2['education_planning']  
+# client_data2['education_planning']  
 
 def calculate_education_funding(client_data):
     """
@@ -439,6 +438,8 @@ def calculate_education_funding(client_data):
     # --- Helper Functions ---
     def calculate_future_value(present_value, annual_rate, years):
         """Calculates the future value of a lump sum investment."""
+        if present_value==None:
+            present_value=0
         if years < 0:
             return present_value
         return present_value * ((1 + annual_rate) ** years)
@@ -586,8 +587,8 @@ def calculate_education_funding(client_data):
     
     return client_data
 
-client_data3 = calculate_education_funding(client_data2)
-client_data3['education_planning_summary']
+# client_data3 = calculate_education_funding(client_data2)
+# client_data3['education_planning_summary']
 
 def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=0.06):
     """
@@ -645,9 +646,9 @@ def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=
     }
     
     # METHOD A: STANDARD METHOD (Flat Expense Method)
-    print("=" * 60)
-    print("METHOD A: STANDARD METHOD (Flat Expense Method)")
-    print("=" * 60)
+    # print("=" * 60)
+    # print("METHOD A: STANDARD METHOD (Flat Expense Method)")
+    # print("=" * 60)
     
     # Assume 4% real return during retirement (post-inflation)
     real_return_rate = 0.04
@@ -665,15 +666,15 @@ def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=
         "required_corpus": round(standard_corpus, 2)
     }
     
-    print(f"Annual Expenses at Retirement: ₹{future_annual_expenses:,.2f}")
-    print(f"Retirement Duration: {retirement_duration} years")
-    print(f"Real Return Rate (Post-Inflation): {real_return_rate*100}%")
-    print(f"Required Corpus (Standard Method): ₹{standard_corpus:,.2f}")
+    # print(f"Annual Expenses at Retirement: ₹{future_annual_expenses:,.2f}")
+    # print(f"Retirement Duration: {retirement_duration} years")
+    # print(f"Real Return Rate (Post-Inflation): {real_return_rate*100}%")
+    # print(f"Required Corpus (Standard Method): ₹{standard_corpus:,.2f}")
     
     # METHOD B: SEGMENTED CASH FLOW METHOD (Lifestyle-Based Phases)
-    print("\n" + "=" * 60)
-    print("METHOD B: SEGMENTED CASH FLOW METHOD (Lifestyle-Based)")
-    print("=" * 60)
+    # print("\n" + "=" * 60)
+    # print("METHOD B: SEGMENTED CASH FLOW METHOD (Lifestyle-Based)")
+    # print("=" * 60)
     
     # Define retirement phases
     phases = [
@@ -749,11 +750,11 @@ def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=
         segmented_phases.append(phase_info)
         total_segmented_corpus += phase_corpus_at_retirement
         
-        print(f"\n{phase['name']} ({phase_start}-{phase_end}):")
-        print(f"  Duration: {phase_duration} years")
-        print(f"  Expense Level: {phase['expense_multiplier']*100:.0f}% of baseline")
-        print(f"  Annual Expenses: ₹{phase_annual_expenses:,.2f}")
-        print(f"  Corpus Required: ₹{phase_corpus_at_retirement:,.2f}")
+        # print(f"\n{phase['name']} ({phase_start}-{phase_end}):")
+        # print(f"  Duration: {phase_duration} years")
+        # print(f"  Expense Level: {phase['expense_multiplier']*100:.0f}% of baseline")
+        # print(f"  Annual Expenses: ₹{phase_annual_expenses:,.2f}")
+        # print(f"  Corpus Required: ₹{phase_corpus_at_retirement:,.2f}")
     
     retirement_plan["segmented_method"] = {
         "phases": segmented_phases,
@@ -761,14 +762,14 @@ def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=
     }
     
     # Summary and Comparison
-    print("\n" + "=" * 60)
-    print("RETIREMENT CORPUS SUMMARY")
-    print("=" * 60)
-    print(f"Standard Method Corpus:           ₹{standard_corpus:,.2f}")
-    print(f"Segmented Method Corpus:          ₹{total_segmented_corpus:,.2f}")
+    # print("\n" + "=" * 60)
+    # print("RETIREMENT CORPUS SUMMARY")
+    # print("=" * 60)
+    # print(f"Standard Method Corpus:           ₹{standard_corpus:,.2f}")
+    # print(f"Segmented Method Corpus:          ₹{total_segmented_corpus:,.2f}")
     difference = total_segmented_corpus - standard_corpus
     percentage_diff = (difference / standard_corpus) * 100
-    print(f"Difference:                       ₹{difference:,.2f} ({percentage_diff:+.1f}%)")
+    # print(f"Difference:                       ₹{difference:,.2f} ({percentage_diff:+.1f}%)")
     
     retirement_plan["comparison"] = {
         "standard_corpus": round(standard_corpus, 2),
@@ -785,12 +786,12 @@ def calculate_retirement_corpus(client_data, life_expectancy=85, inflation_rate=
         "rationale": "Taking the higher estimate to ensure adequate retirement funding"
     }
     
-    print(f"\nRECOMMENDED RETIREMENT CORPUS: ₹{recommended_corpus:,.2f}")
-    print(f"Method: {retirement_plan['recommendation']['method_used']}")
+    # print(f"\nRECOMMENDED RETIREMENT CORPUS: ₹{recommended_corpus:,.2f}")
+    # print(f"Method: {retirement_plan['recommendation']['method_used']}")
     
     return retirement_plan
 
-retirement_analysis = calculate_retirement_corpus(client_data3) 
+# retirement_analysis = calculate_retirement_corpus(client_data3) 
 
 
 
@@ -934,17 +935,17 @@ def calculate_all_retirement_investments(retirement_investments,
     }
 
 # Suppose Rahul is 40 now
-output = calculate_all_retirement_investments(client_data3['investment_details']['retirement_investments']  , current_age=client_data3['client_data']['client_age'] )
-print(output["category_totals"])
-print("Grand total corpus:", output["grand_total"])
+# output = calculate_all_retirement_investments(client_data3['investment_details']['retirement_investments']  , current_age=client_data3['client_data']['client_age'] )
+# print(output["category_totals"])
+# print("Grand total corpus:", output["grand_total"])
 
 def retirement_goal(required_retirement_corpus: float, estimated_retirement_corpus: float, sip_annual_rate: float=0.09, retirement_age: int=60):
 
     current_date=date.today()
     if required_retirement_corpus>estimated_retirement_corpus:
-        print(f"""required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
-                retirement_gap: {required_retirement_corpus-estimated_retirement_corpus}
- """)
+#         print(f"""required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
+#                 retirement_gap: {required_retirement_corpus-estimated_retirement_corpus}
+#  """)
         #sip_amount=calculate_required_sip(required_retirement_corpus-estimated_retirement_corpus, sip_annual_rate, client_data['client_data']['retirement_age']-(current_date.year-int(client_data['client_data']['date_of_birth'].split('-')[0])))
         years_to_retire= retirement_age - client_data3['client_data']['client_age']
         result={}
@@ -958,10 +959,10 @@ def retirement_goal(required_retirement_corpus: float, estimated_retirement_corp
         result['surplus']=0
     
     elif required_retirement_corpus==estimated_retirement_corpus:
-        print(f"""
-             required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
-             retirement_gap = 0
-""")
+#         print(f"""
+#              required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
+#              retirement_gap = 0
+# """)
         result={}
         result['goal_name']="retirement"
         result['corpus_needed']=0
@@ -973,10 +974,10 @@ def retirement_goal(required_retirement_corpus: float, estimated_retirement_corp
         result['surplus']=0
     
     elif required_retirement_corpus<estimated_retirement_corpus: 
-        print(f"""
-             required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
-             retirement_gap = 0, \n surplus_corpus: {estimated_retirement_corpus-required_retirement_corpus}
-""")
+#         print(f"""
+#              required retirement corpus: {required_retirement_corpus} \n estimated retirement corpus: {estimated_retirement_corpus} \n
+#              retirement_gap = 0, \n surplus_corpus: {estimated_retirement_corpus-required_retirement_corpus}
+# """)
         result={}
         result['goal_name']="retirement"
         result['corpus_needed']=0
@@ -989,19 +990,19 @@ def retirement_goal(required_retirement_corpus: float, estimated_retirement_corp
 
     return result
 
-retirement_goals=retirement_goal(retirement_analysis['recommendation']['recommended_corpus'], output["grand_total"])
+# retirement_goals=retirement_goal(retirement_analysis['recommendation']['recommended_corpus'], output["grand_total"])
 
-education_planning=[]
-for goal in client_data3['education_planning_summary']:
-    education_planning.append({'goal_name': goal['name'] + " " + goal['type'], 'target_year': goal['target_year'], 'corpus_needed': goal['final_gap'], 'corpus_gap': goal['final_gap'], 'funded_from':[] })
-education_goals=education_planning
+# education_planning=[]
+# for goal in client_data3['education_planning_summary']:
+#     education_planning.append({'goal_name': goal['name'] + " " + goal['type'], 'target_year': goal['target_year'], 'corpus_needed': goal['final_gap'], 'corpus_gap': goal['final_gap'], 'funded_from':[] })
+# education_goals=education_planning
 
-financial_goals=[]
-for goal in client_data3['financial_goals']:
-    financial_goals.append({'goal_name': goal['goal_name'] , 'target_year': goal['target_year'], 'corpus_needed': goal['goal_gap'], 'corpus_gap': goal['goal_gap'], 'funded_from':[] })
-other_goals=financial_goals
+# financial_goals=[]
+# for goal in client_data3['financial_goals']:
+#     financial_goals.append({'goal_name': goal['goal_name'] , 'target_year': goal['target_year'], 'corpus_needed': goal['goal_gap'], 'corpus_gap': goal['goal_gap'], 'funded_from':[] })
+# other_goals=financial_goals
 
-total_goals=[retirement_goals]+education_goals+other_goals
+# total_goals=[retirement_goals]+education_goals+other_goals
 
 ######################################################################################## asset classification #################################################################################################
 
@@ -1055,11 +1056,11 @@ def asset_basket_classification(client_data):
         if asset=='financial_summary':
             continue       
         for instrument in asset_basket[f"{asset}"]:
-            print(f"instrument: {instrument}")
+            # print(f"instrument: {instrument}")
             if asset=='retirement_investments':
                 for retirement_instrument in asset_basket[asset][f'{instrument}']:
                         #print(asset_basket[asset][f'{instrument}'])
-                        print(f"retirement instrument: {retirement_instrument}")
+                        # print(f"retirement instrument: {retirement_instrument}")
                         if retirement_instrument['asset_tag']=='retirement_asset':
                             retirement_assets.append({f'{instrument}':retirement_instrument})
                         
@@ -1073,7 +1074,7 @@ def asset_basket_classification(client_data):
             
     return retirement_assets, liquid_assets, fixed_assets
 
-retirement_bucket, liquid_bucket, fixed_bucket=asset_basket_classification(client_data3)
+# retirement_bucket, liquid_bucket, fixed_bucket=asset_basket_classification(client_data3)
 
 ######################################################################################## asset classification #################################################################################################
 
@@ -1117,8 +1118,8 @@ def calculate_total_asset_value(assets_list):
     }
 
 # Calculate the total value
-liquid_basket_value = calculate_total_asset_value(liquid_bucket)
-liquid_pool=liquid_basket_value['total_asset_value']
+# liquid_basket_value = calculate_total_asset_value(liquid_bucket)
+# liquid_pool=liquid_basket_value['total_asset_value']
 
 
 
@@ -1174,17 +1175,17 @@ def calculate_fixed_assets_value(assets_list):
     }
 
 # Example usage with your provided data:
-fixed_assets = [
-    {'real_estate_investment': {'current_market_value': 15000000, 'rental_income': 35000, 'asset_tag': 'fixed_asset', 'asset_id': 1}},
-    {'bonds': {'name_of_bond': 'python_bond', 'investment_amount': 400000, 'contribution_per_annum': 4000, 'maturity_date': '2027-05-01', 'interest_rate': 0.07, 'asset_tag': 'fixed_asset', 'asset_id': 11}},
-    {'pms_aif': {'current_value': 1150000, 'asset_tag': 'fixed_asset', 'asset_id': 16}},
-    {'esops': {'vested_esops_value': 300000, 'unvested_esops_value': 200000, 'asset_tag': 'fixed_asset', 'asset_id': 17}},
-    {'fixed_deposits': {'name_of_bank': 'state_bank_of_india', 'principal_amount': 300000, 'interest_rate': 0.065, 'maturity_date': '07-2035', 'asset_tag': 'fixed_asset', 'asset_id': 18}}
-]
+# fixed_assets = [
+#     {'real_estate_investment': {'current_market_value': 15000000, 'rental_income': 35000, 'asset_tag': 'fixed_asset', 'asset_id': 1}},
+#     {'bonds': {'name_of_bond': 'python_bond', 'investment_amount': 400000, 'contribution_per_annum': 4000, 'maturity_date': '2027-05-01', 'interest_rate': 0.07, 'asset_tag': 'fixed_asset', 'asset_id': 11}},
+#     {'pms_aif': {'current_value': 1150000, 'asset_tag': 'fixed_asset', 'asset_id': 16}},
+#     {'esops': {'vested_esops_value': 300000, 'unvested_esops_value': 200000, 'asset_tag': 'fixed_asset', 'asset_id': 17}},
+#     {'fixed_deposits': {'name_of_bank': 'state_bank_of_india', 'principal_amount': 300000, 'interest_rate': 0.065, 'maturity_date': '07-2035', 'asset_tag': 'fixed_asset', 'asset_id': 18}}
+# ]
 
-# Calculate the total value
-calculated_values = calculate_fixed_assets_value(fixed_bucket)
-fixed_pool=calculated_values['total_fixed_asset_value']
+# # Calculate the total value
+# calculated_values = calculate_fixed_assets_value(fixed_bucket)
+# fixed_pool=calculated_values['total_fixed_asset_value']
 
 ########################################################################################### liquid and fixed assets pool #########################################################################################################
 
